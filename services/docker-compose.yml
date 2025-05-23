@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  authentication:
+    build:
+      context: ./authentication
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080" # Exposes port 8080 on the host and maps it to port 8080 in the container
+    container_name: auth_service
+    networks:
+      - microservices_network
+
+  gamelogic:
+    build:
+      context: ./gamelogic
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081" # Exposes port 8081 on the host and maps it to port 8081 in the container
+    container_name: gamelogic_service
+    networks:
+      - microservices_network
+
+  rest:
+    build:
+      context: ./rest
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082" # Exposes port 8082 on the host and maps it to port 8082 in the container
+    container_name: rest_service
+    networks:
+      - microservices_network
+
+networks:
+  microservices_network:
+    driver: bridge
